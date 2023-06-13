@@ -57,7 +57,7 @@
 											"top": 13,
 											"width": 365.12451171875,
 											"height": 13,
-											"text": "module Ontology: class Ontology"
+											"text": "module ontology: class Ontology"
 										},
 										{
 											"_type": "ERDColumnCompartmentView",
@@ -581,9 +581,9 @@
 											"font": "Arial;13;1",
 											"left": 24,
 											"top": 429,
-											"width": 315.87939453125,
+											"width": 564.82177734375,
 											"height": 13,
-											"text": "module Statistics: class SimpleStatistics"
+											"text": "module ontologyStatistics: class SimpleStatistics"
 										},
 										{
 											"_type": "ERDColumnCompartmentView",
@@ -607,7 +607,7 @@
 													"font": "Arial;13;0",
 													"left": 29,
 													"top": 452,
-													"width": 305.87939453125,
+													"width": 554.82177734375,
 													"height": 13
 												},
 												{
@@ -622,7 +622,7 @@
 													"font": "Arial;13;0",
 													"left": 29,
 													"top": 467,
-													"width": 305.87939453125,
+													"width": 554.82177734375,
 													"height": 13
 												},
 												{
@@ -637,7 +637,7 @@
 													"font": "Arial;13;0",
 													"left": 29,
 													"top": 482,
-													"width": 305.87939453125,
+													"width": 554.82177734375,
 													"height": 13
 												},
 												{
@@ -652,7 +652,7 @@
 													"font": "Arial;13;0",
 													"left": 29,
 													"top": 497,
-													"width": 305.87939453125,
+													"width": 554.82177734375,
 													"height": 13
 												},
 												{
@@ -667,22 +667,82 @@
 													"font": "Arial;13;0",
 													"left": 29,
 													"top": 512,
-													"width": 305.87939453125,
+													"width": 554.82177734375,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAGIsikBhQQJkbs=",
+													"_parent": {
+														"$ref": "AAAAAAGIpfasqm5UH4E="
+													},
+													"model": {
+														"$ref": "AAAAAAGIsikBZgQGOWY="
+													},
+													"font": "Arial;13;0",
+													"left": 29,
+													"top": 527,
+													"width": 554.82177734375,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAGIsikFOwQPVro=",
+													"_parent": {
+														"$ref": "AAAAAAGIpfasqm5UH4E="
+													},
+													"model": {
+														"$ref": "AAAAAAGIsikFJgQMDKM="
+													},
+													"font": "Arial;13;0",
+													"left": 29,
+													"top": 542,
+													"width": 554.82177734375,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAGIsikI5QQVUtM=",
+													"_parent": {
+														"$ref": "AAAAAAGIpfasqm5UH4E="
+													},
+													"model": {
+														"$ref": "AAAAAAGIsikI0gQSqxA="
+													},
+													"font": "Arial;13;0",
+													"left": 29,
+													"top": 557,
+													"width": 554.82177734375,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAGIsikNYwQb17Y=",
+													"_parent": {
+														"$ref": "AAAAAAGIpfasqm5UH4E="
+													},
+													"model": {
+														"$ref": "AAAAAAGIsikNTwQYtNg="
+													},
+													"font": "Arial;13;0",
+													"left": 29,
+													"top": 572,
+													"width": 554.82177734375,
 													"height": 13
 												}
 											],
 											"font": "Arial;13;0",
 											"left": 24,
 											"top": 447,
-											"width": 315.87939453125,
-											"height": 83
+											"width": 564.82177734375,
+											"height": 143
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 24,
 									"top": 424,
-									"width": 315.87939453125,
-									"height": 106,
+									"width": 564.82177734375,
+									"height": 166,
 									"nameLabel": {
 										"$ref": "AAAAAAGIpfasqm5TBNM="
 									},
@@ -796,7 +856,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGIpd6xmm04PFQ="
 							},
-							"name": "module Ontology: class Ontology",
+							"name": "module ontology: class Ontology",
 							"columns": [
 								{
 									"_type": "ERDColumn",
@@ -1068,7 +1128,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGIpd6xmm04PFQ="
 							},
-							"name": "module Statistics: class SimpleStatistics",
+							"name": "module ontologyStatistics: class SimpleStatistics",
 							"columns": [
 								{
 									"_type": "ERDColumn",
@@ -1085,7 +1145,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGIpfasqW5QM1U="
 									},
-									"name": "getCountEntitiesForClassWithRelationship",
+									"name": "getMaxCountEntitiesForAnyClass",
 									"length": 0
 								},
 								{
@@ -1094,7 +1154,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGIpfasqW5QM1U="
 									},
-									"name": "getCountEntitiesForClassWithoutRelationship",
+									"name": "getEmptyClasses",
 									"length": 0
 								},
 								{
@@ -1103,7 +1163,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGIpfasqW5QM1U="
 									},
-									"name": "getCountEntitiesForRelationship",
+									"name": "getCountEntitiesForClassWhitchSatisfyRelationships",
 									"length": 0
 								},
 								{
@@ -1112,7 +1172,43 @@
 									"_parent": {
 										"$ref": "AAAAAAGIpfasqW5QM1U="
 									},
-									"name": "getEntitiesForRelationship",
+									"name": "getEntitiesForClassWhitchSatisfyRelationships",
+									"length": 0
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAGIsikBZgQGOWY=",
+									"_parent": {
+										"$ref": "AAAAAAGIpfasqW5QM1U="
+									},
+									"name": "getAverageLinkBetweenClassesFor",
+									"length": 0
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAGIsikFJgQMDKM=",
+									"_parent": {
+										"$ref": "AAAAAAGIpfasqW5QM1U="
+									},
+									"name": "getAverageLinkBetweenClassesWhitchSatisfyRelationships",
+									"length": 0
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAGIsikI0gQSqxA=",
+									"_parent": {
+										"$ref": "AAAAAAGIpfasqW5QM1U="
+									},
+									"name": "getAverageLinkBetweenClassesForSpecifiedRelationships",
+									"length": 0
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAGIsikNTwQYtNg=",
+									"_parent": {
+										"$ref": "AAAAAAGIpfasqW5QM1U="
+									},
+									"name": "getAverageLinkBetweenClassesForSpecifiedRelationshipsWhitchSatisfyRelationships",
 									"length": 0
 								}
 							]

@@ -306,11 +306,11 @@ class Ontology:
         
         outEntityNamelist=[i.name for i in self.ontology[classNameList.index(outClassName)].entities]
         if(not outEntityName in outEntityNamelist):
-            raise Exceptino('error in getAllRelationshipedEntitiesForEntity in Ontology: an out entity "'+outEntityName+'" for an out class "'+outClassName+'" does not exist')
+            raise Exception('error in getAllRelationshipedEntitiesForEntity in Ontology: an out entity "'+outEntityName+'" for an out class "'+outClassName+'" does not exist')
         
         outEntity=self.ontology[classNameList.index(outClassName)].entities[outEntityNamelist.index(outEntityName)]
         
-        return [(i.inClassName, i.inEntityName) for i in outEntity.entityRelationships]
+        return [(i.inClassName, i.inEntityName, i.name) for i in outEntity.entityRelationships]
 
     def getAllRelationshipedEntitiesForOutEntityForInClass(self, outEntityName, outClassName, inClassName):
         classNameList=[i.name for i in self.ontology]
@@ -322,11 +322,11 @@ class Ontology:
         
         outEntityNamelist=[i.name for i in self.ontology[classNameList.index(outClassName)].entities]
         if(not outEntityName in outEntityNamelist):
-            raise Exceptino('error in getAllRelationshipedEntitiesForOutEntityForInClass in Ontology: an out entity "'+outEntityName+'" for an out class "'+outClassName+'" does not exist')
+            raise Exception('error in getAllRelationshipedEntitiesForOutEntityForInClass in Ontology: an out entity "'+outEntityName+'" for an out class "'+outClassName+'" does not exist')
         
         outEntity=self.ontology[classNameList.index(outClassName)].entities[outEntityNamelist.index(outEntityName)]
         
-        return [i.inEntityName for i in outEntity.entityRelationships if i.inClassName==inClassName]
+        return [(i.inEntityName, i.name) for i in outEntity.entityRelationships if i.inClassName==inClassName]
     
     def getAllRelationshipedEntitiesForOutEntityForRelationship(self, outEntityName, outClassName, relationshipName):
         classNameList=[i.name for i in self.ontology]

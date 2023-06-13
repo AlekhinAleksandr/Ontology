@@ -151,7 +151,7 @@
 	\begin{itemize}
 		\item outEntityName - название сущности класса
 		\item outClassName - название выходного класса
-		\item return - список кортеджей вида (название класса, название сущности класса)
+		\item return - список кортеджей вида (название класса, название сущности класса, название отношения)
 	\end{itemize}
 	получение всех сущностей класса связанных с заданной сущностью, с генерацией ошибки при не существования заданной сущности класса или несуществовании выходного класса
 	
@@ -208,7 +208,7 @@
 	ont.addClass('D')
 	ont.changeClass('CC','C')
 	ont.deleteClass('D', True)
-	print(ont.getAllClasses())# [A, B, C]
+	print(ont.getAllClasses())# ['A', 'B', 'C']
 	
 	ont.addRelationship('aa','A','A')
 	ont.addRelationship('ab','A','B')
@@ -238,22 +238,24 @@
 	ont.addEntityRelationship('cb','C','c2','b3')
 	ont.deleteEntityRelationship('cb','C','c2','b3')
 	
-	print(ont.getAllClasses())# [A, B, C]
-	print(ont.getAllRelationshipsForOutClass('A'))# [aa, ab, ac]
+	print(ont.getAllClasses())# ['A', 'B', 'C']
+	print(ont.getAllRelationshipsForOutClass('A'))# ['aa', 'ab', 'ac']
 	print(ont.getAllRelationshipsForOutClass('B'))# []
-	print(ont.getAllRelationshipsForOutClass('C'))# [cb]
-	print(ont.getAllRelationshipsForOutClassToInClass('A','B'))# [ab]
-	print(ont.getAllRelationshipsForOutClassToInClass('A','A'))# [aa]
+	print(ont.getAllRelationshipsForOutClass('C'))# ['cb']
+	print(ont.getAllRelationshipsForOutClassToInClass('A','B'))# ['ab']
+	print(ont.getAllRelationshipsForOutClassToInClass('A','A'))# ['aa']
 	print(ont.getAllRelationshipsForOutClassToInClass('C','A'))# []
-	print(ont.getAllEntitiesForClass('A'))# [a1, a2]
-	print(ont.getAllEntitiesForClass('B'))# [b1, b2, b3]
-	print(ont.getAllEntitiesForClass('C'))# [c1, c2]
-	print(ont.getAllRelationshipedEntitiesForOutEntity('a1','A'))# [(A,a1)]
-	print(ont.getAllRelationshipedEntitiesForOutEntity('a2','A'))# [(C,c1), (C,c2)]
+	print(ont.getAllEntitiesForClass('A'))# ['a1', 'a2']
+	print(ont.getAllEntitiesForClass('B'))# ['b1', 'b2', 'b3']
+	print(ont.getAllEntitiesForClass('C'))# ['c1', 'c2']
+	print(ont.getAllRelationshipedEntitiesForOutEntity('a1','A'))# [('A', 'a1', 'aa')]
+	print(ont.getAllRelationshipedEntitiesForOutEntity('a2','A'))
+	# [('C', 'c1', 'ac'), ('C', 'c2', 'ac')]
 	print(ont.getAllRelationshipedEntitiesForOutEntity('b1','B'))# []
-	print(ont.getAllRelationshipedEntitiesForOutEntityForInClass('a2','A','C'))# [(C,c1), (C,c2)]
+	print(ont.getAllRelationshipedEntitiesForOutEntityForInClass('a2','A','C'))
+	# [('c1', 'ac'), ('c2', 'ac')]
 	print(ont.getAllRelationshipedEntitiesForOutEntityForInClass('a2','A','B'))# []
-	print(ont.getAllRelationshipedEntitiesForOutEntityForRelationship('a2','A','ac'))# [(C,c1), (C,c2)]
+	print(ont.getAllRelationshipedEntitiesForOutEntityForRelationship('a2','A','ac'))# ['c1', 'c2']
 	print(ont.getAllRelationshipedEntitiesForOutEntityForRelationship('a2','A','ab'))# []
 	ont.saveToFile('ont1.txt')
 	
@@ -262,6 +264,185 @@
 	ont.crear()
 	ont=Ontology('ont1.txt')
 	#...
+	\end{verbatim}
+	\large
+	
+	\section{модуль ontologyStatistics.py}
+	Здесь хранится классы для хранения и взаимодействия с онтологией
+	
+	\subsection{класс SimpleStatistics}
+	этот класс состоит только из статических методов и вычисляет простые соотношения и количества для сущностей класса и их связей.
+	\ \\
+	
+	\begin{enumerate}
+		\item def getCountEntitiesForClass(ontology, className)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item className - название класса
+			\item return - целочисленное число
+		\end{itemize}
+		количество сущностей класса, с генерацией ошибки при не существовании добавляемого класса
+		
+		\item def getMaxCountEntitiesForAnyClass(ontology)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item return - целочисленное число
+		\end{itemize}
+		максимальное количество сущностей класса для одного  класса
+		
+		\item def getEmptyClasses(ontology)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item return - список с названиями классов
+		\end{itemize}
+		список классов без сущностей
+		
+		\item def getCountEntitiesForClassWhitchSatisfyRelationships(ontology, className, withRelationships, withoutRelationships)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item className - название класса
+			\item withRelationships - список с названиями присутствующих отношений
+			\item withoutRelationships - список с названиями отсутствующих отношений
+			\item return - целочисленное число
+		\end{itemize}
+		количество сущностей класса из заданного класса, у которых нет связей соответствующих отсутствующим отношениям и есть все связи хотя бы по одному разу соответствующие присутствующим отношениям, с генерацией исключения при несуществовании класса или несуществовании идного из указанных отношений
+		
+		\item def getEntitiesForClassWhitchSatisfyRelationships(ontology, className, withRelationships, withoutRelationships)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item className - название класса
+			\item withRelationships - список с названиями присутствующих отношений
+			\item withoutRelationships - список с названиями отсутствующих отношений
+			\item return - список названий сущностей класса
+		\end{itemize}
+		список сущностей класса из заданного класса, у которых нет связей соответствующих отсутствующим отношениям и есть все связи хотя бы по одному разу соответствующие присутствующим отношениям, с генерацией исключения при несуществовании класса или несуществовании одного из указанных отношений
+		
+		\item def getAverageLinkBetweenClassesFor(ontology, outClassName, inClassName, forInClass = False)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item outClassName - название выходного класса
+			\item inClassName - название входного класса
+			\item forInClass - метка вычислений для входного класса(иначе дял выходного класса)
+			\item return - вещественное число
+		\end{itemize}
+		среднее количество связей выходящий из сущностей класса выходного класса в сущности класса входного класса относительно количества сущностей класса для которого происходит вычисление, с генерацией исключения при несуществовании класса
+		
+		\item def getAverageLinkBetweenClassesWhitchSatisfyRelationships(ontology, outClassName, inClassName, withRelationships, withoutRelationships, forInClass = False)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item outClassName - название выходного класса
+			\item inClassName - название входного класса
+			\item withRelationships - список с названиями присутствующих отношений
+			\item withoutRelationships - список с названиями отсутствующих отношений
+			\item forInClass - метка вычислений для входного класса(иначе дял выходного класса)
+			\item return - вещественное число
+		\end{itemize}
+		среднее количество связей выходящий из сущностей класса выходного класса в сущности класса входного класса относительно количества сущностей класса для которого происходит вычисление, где учитываются только сущности класса у которых не существует связей соответствующих отсутствующим отношениям и существуют связи соответствующие всем присутствующим отношениям, с генерацией исключения при несуществовании класса или несуществовании одного из указанных отношений 
+		
+		\item def getAverageLinkBetweenClassesForSpecifiedRelationships(ontology, outClassName, inClassName, specifiedRelationships, forInClass = False)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item outClassName - название выходного класса
+			\item inClassName - название входного класса
+			\item specifiedRelationships - список с названиями подсчитывающихся отношений
+			\item forInClass - метка вычислений для входного класса(иначе дял выходного класса)
+			\item return - вещественное число
+		\end{itemize}
+		среднее количество связей, соответствующих подсчитывающимся отношениям, выходящий из сущностей класса выходного класса в сущности класса входного класса относительно количества сущностей класса для которого происходит вычисление, с генерацией исключения при несуществовании класса или несуществовании одного из указанных отношений 
+		
+		\item def getAverageLinkBetweenClassesForSpecifiedRelationshipsWhitchSatisfyRelationships(
+		ontology, outClassName, inClassName, specifiedRelationships, withRelationships, withoutRelationships, forInClass = False)
+		\begin{itemize}
+			\item ontology - объект ontology.Ontology
+			\item outClassName - название выходного класса
+			\item inClassName - название входного класса
+			\item specifiedRelationships - список с названиями подсчитывающихся отношений
+			\item withRelationships - список с названиями присутствующих отношений
+			\item withoutRelationships - список с названиями отсутствующих отношений
+			\item forInClass - метка вычислений для входного класса(иначе дял выходного класса)
+			\item return - вещественное число
+		\end{itemize}
+		среднее количество связей, соответствующих подсчитывающимся отношениям, выходящий из сущностей класса выходного класса в сущности класса входного класса относительно количества сущностей класса для которого происходит вычисление, где учитываются только сущности класса у которых не существует связей соответствующих отсутствующим отношениям и существуют связи соответствующие всем присутствующим отношениям, с генерацией исключения при несуществовании класса или несуществовании одного из указанных отношений 
+	\end{enumerate}
+	
+	Пример использования
+	
+	\normalsize
+	\begin{verbatim}
+		from ontology import *
+		from ontologyStatistics import *
+		
+		ont=Ontology()
+		ont.addClass('A')
+		ont.addClass('B')
+		ont.addClass('C')
+		ont.addClass('D')
+		ont.addRelationship('ab1','A','B')
+		ont.addRelationship('ab2','A','B')
+		ont.addRelationship('ac1','A','C')
+		ont.addRelationship('ac2','A','C')
+		ont.addEntity('a1','A')
+		ont.addEntity('a2','A')
+		ont.addEntity('a3','A')
+		ont.addEntity('a4','A')
+		ont.addEntity('a5','A')
+		ont.addEntity('a6','A')
+		ont.addEntity('a7','A')
+		ont.addEntity('a8','A')
+		ont.addEntity('a9','A')
+		ont.addEntity('a10','A')
+		ont.addEntity('b1','B')
+		ont.addEntity('b2','B')
+		ont.addEntity('b3','B')
+		ont.addEntity('c1','C')
+		ont.addEntityRelationship('ac1','A','a1','c1')
+		ont.addEntityRelationship('ac1','A','a2','c1')
+		ont.addEntityRelationship('ac1','A','a3','c1')
+		ont.addEntityRelationship('ac1','A','a4','c1')
+		ont.addEntityRelationship('ac2','A','a4','c1')
+		ont.addEntityRelationship('ab1','A','a1','b1')
+		ont.addEntityRelationship('ab2','A','a1','b1')
+		ont.addEntityRelationship('ab1','A','a1','b2')
+		ont.addEntityRelationship('ab2','A','a2','b2')
+		ont.addEntityRelationship('ab1','A','a3','b2')
+		ont.addEntityRelationship('ab1','A','a3','b3')
+		ont.addEntityRelationship('ab1','A','a4','b3')
+		ont.addEntityRelationship('ab2','A','a4','b3')
+		ont.addEntityRelationship('ab1','A','a5','b3')
+		
+		print(SimpleStatistics.getCountEntitiesForClass(ont,'A'))#10
+		print(SimpleStatistics.getCountEntitiesForClass(ont,'B'))#3
+		print(SimpleStatistics.getCountEntitiesForClass(ont,'D'))#0
+		print(SimpleStatistics.getMaxCountEntitiesForAnyClass(ont))#10
+		print(SimpleStatistics.getEmptyClasses(ont))#['D']
+		print(SimpleStatistics.getEntitiesForClassWhitchSatisfyRelationships(
+		    ont, 'A', set(['ac1','ab1']), set(['ac2'])))#['a1','a3']
+		print(SimpleStatistics.getCountEntitiesForClassWhitchSatisfyRelationships(
+		    ont, 'A',set(['ac1','ab1']), set(['ac2'])))#2
+		print(SimpleStatistics.getCountEntitiesForClassWhitchSatisfyRelationships(
+		    ont, 'A',set(), set(['ac2'])))#9
+		print(SimpleStatistics.getAverageLinkBetweenClassesFor(
+		    ont, 'A', 'B', True))#3.0
+		print(SimpleStatistics.getAverageLinkBetweenClassesFor(
+		    ont, 'A', 'B', False))#0.9
+		print(SimpleStatistics.getAverageLinkBetweenClassesWhitchSatisfyRelationships(
+		    ont, 'A', 'B', set(['ac1']), set(['ac2']), True))#2.0
+		print(SimpleStatistics.getAverageLinkBetweenClassesWhitchSatisfyRelationships(
+		    ont, 'A', 'B', set(['ac1']), set(['ac2']), False))#0.6
+		print(SimpleStatistics.getAverageLinkBetweenClassesForSpecifiedRelationships(
+		    ont, 'A', 'B', set(['ab1']), True))#2.0
+		print(SimpleStatistics.getAverageLinkBetweenClassesForSpecifiedRelationships(
+		    ont, 'A', 'B', set(['ab1']), False))#0.6
+		print(SimpleStatistics.getAverageLinkBetweenClassesForSpecifiedRelationships(
+		    ont, 'A', 'B', set(['ab1','ab2']), True))#3.0
+		print(SimpleStatistics.getAverageLinkBetweenClassesForSpecifiedRelationships(
+		    ont, 'A', 'B', set(['ab1','ab2']), False))#0.9
+		print(SimpleStatistics.
+		    getAverageLinkBetweenClassesForSpecifiedRelationshipsWhitchSatisfyRelationships(
+		    ont, 'A', 'B', set(['ab1']), set(['ac1']), set(['ac2']), True))#1.3333333333333
+		print(SimpleStatistics.
+		    getAverageLinkBetweenClassesForSpecifiedRelationshipsWhitchSatisfyRelationships(
+		    ont, 'A', 'B', set(['ab1']), set(['ac1']), set(['ac2']), False))#0.4
 	\end{verbatim}
 	\large
 \end{document}
